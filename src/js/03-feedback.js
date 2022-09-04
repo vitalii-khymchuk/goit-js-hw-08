@@ -25,11 +25,12 @@ function putSavedDataToInput(data) {
 }
 
 const inputsData = { email: '', message: '' };
-function onFormInput() {
-  const currentEmailValue = formRef.email.value;
-  const currentMessageValue = formRef.message.value;
-  inputsData.email = currentEmailValue;
-  inputsData.message = currentMessageValue;
+function onFormInput(e) {
+  // const currentEmailValue = formRef.email.value;
+  // const currentMessageValue = formRef.message.value;
+  // inputsData.email = currentEmailValue;
+  // inputsData.message = currentMessageValue;
+  inputsData[e.target.name] = e.target.value;
   saveInputsData(inputsData);
 }
 
@@ -39,11 +40,11 @@ function saveInputsData(inputsData) {
 }
 
 function onFormSubmit(evt) {
-  evt.preventDefault();
-  const formData = {};
-  formData.email = evt.target.email.value;
-  formData.message = evt.target.message.value;
-  console.log(formData);
+  // evt.preventDefault();
+  // const formData = {};
+  // formData.email = evt.target.email.value;
+  // formData.message = evt.target.message.value;
+  console.log(inputsData);
   evt.target.reset();
   localStorage.removeItem('inputsData');
 }
