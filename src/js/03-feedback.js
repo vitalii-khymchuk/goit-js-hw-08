@@ -5,6 +5,8 @@ const formRef = document.querySelector('.feedback-form');
 formRef.addEventListener('submit', onFormSubmit);
 formRef.addEventListener('input', throttle(onFormInput, 500));
 
+const inputsData = { email: '', message: '' };
+
 readInputsData();
 
 function readInputsData() {
@@ -20,16 +22,16 @@ function readInputsData() {
 }
 
 function putSavedDataToInput(data) {
-  formRef.email.value = data.email;
-  formRef.message.value = data.message;
+  if (!data) return;
+  for (const key in data) {
+    if (data.hasOwnProperty(key)) {
+      formRef[key].value = data[key];
+      inputsData[key] = data[key];
+    }
+  }
 }
 
-const inputsData = { email: '', message: '' };
 function onFormInput(e) {
-  // const currentEmailValue = formRef.email.value;
-  // const currentMessageValue = formRef.message.value;
-  // inputsData.email = currentEmailValue;
-  // inputsData.message = currentMessageValue;
   inputsData[e.target.name] = e.target.value;
   saveInputsData(inputsData);
 }
@@ -40,10 +42,6 @@ function saveInputsData(inputsData) {
 }
 
 function onFormSubmit(evt) {
-  // evt.preventDefault();
-  // const formData = {};
-  // formData.email = evt.target.email.value;
-  // formData.message = evt.target.message.value;
   console.log(inputsData);
   evt.target.reset();
   localStorage.removeItem('inputsData');
